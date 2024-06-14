@@ -26,8 +26,18 @@ public class AddNumbersController {
         else {
             result = 0; // or throw an error if unexpected operation
         }
+        String reversedString = null;
 
+        if (numbers.getInputString() != null && !numbers.getInputString().isEmpty()) {
+
+
+            reversedString = new StringBuilder(numbers.getInputString()).reverse().toString();
+
+        }
         model.addAttribute("result", result);
+        model.addAttribute("reversedString", reversedString);
         return "addNumbers";
+
+
     }
 }

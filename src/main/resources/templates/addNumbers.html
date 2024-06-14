@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Numbers</title>
+    <title>Add Numbers and Reverse String</title>
 </head>
 <body>
-<h1>Add Two Numbers</h1>
+<h1>Add Two Numbers and Reverse String</h1>
 <form action="#" th:action="@{/addNumbers}" th:object="${numbers}" method="post">
     <label for="number1">Number 1:</label>
     <input type="number" id="number1" th:field="*{number1}" required/>
@@ -18,9 +18,14 @@
         <option value="subtract">Subtract</option>
     </select>
     <br/>
-    <button type="submit">Calculate</button>
+    <label for="inputString">String to Reverse(Optional):</label>
+    <input type="text" id="inputString" th:field="*{inputString}"/>
+    <br/>
+    <button type="submit">Calculate and Reverse</button>
 </form>
 
 <h2 th:if="${result != null}">Result: <span th:text="${result}"></span></h2>
+<h2 th:if="${reversedString != null}">Reversed String: <span th:text="${reversedString}"></span></h2>
 </body>
 </html>
+
