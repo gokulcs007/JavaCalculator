@@ -1,26 +1,138 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Numbers</title>
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .calculator {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .display {
+            width: 250px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            text-align: right;
+            font-size: 18px;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+        }
+
+        button {
+            background-color: #eee;
+            color: #333;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #ddd;
+        }
+
+        .operator {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .equal {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .clear {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-<h1>Add Two Numbers</h1>
-<form action="#" th:action="@{/addNumbers}" th:object="${numbers}" method="post">
-    <label for="number1">Number 1:</label>
-    <input type="number" id="number1" th:field="*{number1}" required/>
-    <br/>
-    <label for="number2">Number 2:</label>
-    <input type="number" id="number2" th:field="*{number2}" required/>
-    <br/>
-    <label for="operation">Operation:</label>
-    <select id="operation" th:field="*{operation}">
-        <option value="add">Add</option>
-        <option value="subtract">Subtract</option>
-    </select>
-    <br/>
-    <button type="submit">Calculate</button>
-</form>
+<div class="calculator">
+    <h1>Calculator</h1>
+    <div class="display" id="display"></div>
+    <div class="keypad">
+        <button onclick="appendNumber('7')">7</button>
+        <button onclick="appendNumber('8')">8</button>
+        <button onclick="appendNumber('9')">9</button>
+        <button class="operator" onclick="appendOperator('/')">/</button>
+        <button onclick="appendNumber('4')">4</button>
+        <button onclick="appendNumber('5')">5</button>
+        <button onclick="appendNumber('6')">6</button>
+        <button class="operator" onclick="appendOperator('*')">*</button>
+        <button onclick="appendNumber('1')">1</button>
+        <button onclick="appendNumber('2')">2</button>
+        <button onclick="appendNumber('3')">3</button>
+        <button class="operator" onclick="appendOperator('-')">-</button>
+        <button onclick="appendNumber('0')">0</button>
+        <button onclick="appendNumber('.')">.</button>
+        <button class="equal" onclick="calculate()">=</button>
+        <button class="operator" onclick="appendOperator('+')">+</button>
+        <button class="clear" onclick="clearDisplay()">C</button>
+    </div>
+    <form action="#" th:action="@{/addNumbers}" th:object="${numbers}" method="post" style="display: none;">
+        <input type="hidden" id="number1" th:field="*{number1}"/>
+        <input type="hidden" id="number2" th:field="*{number2}"/>
+        <input type="hidden" id="operation" th:field="*{operation}"/>
+        <button type="submit" style="display: none;"></button>
+    </form>
+    <h2 th:if="${result != null}">Result: <span th:text="${result}"></span></h2>
+</div>
 
-<h2 th:if="${result != null}">Result: <span th:text="${result}"></span></h2>
+<script>
+    let display = document.getElementById('display');
+    let number1 = document.getElementById('number1');
+    let number2 = document.getElementById('number2');
+    let operation = document.getElementById('operation');
+
+    function appendNumber(num) {
+        display.textContent += num;
+    }
+
+    function appendOperator(op) {
+        display.textContent += op;
+    }
+
+    function calculate() {
+        let expression = display.textContent;
+        let parts = expression.split(/(\+|\-|\*|\/)/);
+        number1.value = parseFloat(parts[0]);
+        number2.value = parseFloat(parts[2]);
+        operation.value = parts[1];
+        document.querySelector('form button[type="submit"]').click();
+    }
+
+    function clearDisplay() {
+        display.textContent = '';
+    }
+</script>
 </body>
 </html>

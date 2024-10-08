@@ -1,0 +1,3 @@
+[submodule "JavaCalculator"]
+	path = JavaCalculator
+	url = https://github.com/gokulcs007/JavaCalculator.git

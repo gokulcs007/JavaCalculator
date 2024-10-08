@@ -5,6 +5,8 @@ public class Numbers {
     private int number1;
     private int number2;
     private String operation;
+    private String inputString; // New field for string input
+
 
     // Getters and Setters
     public int getNumber1() {
@@ -30,6 +32,13 @@ public class Numbers {
     public String setOperation(String operation) {
         this.operation = operation;
         return  operation;
+    }
+    public String getInputString() {
+        return inputString;
+    }
+
+    public void setInputString(String inputString) {
+        this.inputString = inputString;
     }
 
 }
